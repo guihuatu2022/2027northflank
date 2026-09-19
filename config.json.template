@@ -1,0 +1,27 @@
+{
+  "log": {
+    "level": "warn"
+  },
+  "inbounds": [
+    {
+      "type": "vless",
+      "listen": "0.0.0.0",
+      "listen_port": PORT_PLACEHOLDER,
+      "users": [
+        {
+          "uuid": "你的-UUID-请替换",
+          "flow": ""
+        }
+      ],
+      "transport": {
+        "type": "xhttp",
+        "path": "/xhttp-8f3b2a1c-9d4e-4f2a"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct"
+    }
+  ]
+}
