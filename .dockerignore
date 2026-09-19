@@ -1,0 +1,13 @@
+# 忽略说明文档
+README.md
+
+# 忽略 Cloudflare Worker 的前端边缘节点代码
+workers.js
+worker.js
+
+# 忽略 GitHub Actions 的工作流配置文件夹 (容器运行不需要)
+.github/
+
+# 忽略 git 版本控制本身的隐藏文件夹
+.git/
+.gitignore
