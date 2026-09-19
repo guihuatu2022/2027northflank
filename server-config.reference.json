@@ -1,0 +1,67 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "none",
+    "dnsLog": false
+  },
+  "dns": {
+    "servers": ["1.1.1.1", "8.8.8.8"]
+  },
+  "inbounds": [
+    {
+      "tag": "xhttp-in",
+      "listen": "0.0.0.0",
+      "port": 8080,
+      "protocol": "vless",
+      "settings": {
+        "clients": [{"id": "00000000-0000-0000-0000-000000000000", "flow": ""}],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "none",
+        "xhttpSettings": {
+          "path": "/a7f3k9q2m5x8",
+          "host": "",
+          "mode": "packet-up",
+          "scMaxEachPostBytes": 1000000,
+          "scMaxBufferedPosts": 30,
+          "xPaddingBytes": "100-1000",
+          "noSSEHeader": false
+        }
+      },
+      "sniffing": {
+        "enabled": false,
+        "destOverride": ["http", "tls", "quic"],
+        "routeOnly": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIPv4"
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": []
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 4,
+        "connIdle": 300,
+        "uplinkOnly": 1,
+        "downlinkOnly": 1
+      }
+    },
+    "system": {
+      "statsInboundUplink": false,
+      "statsInboundDownlink": false
+    }
+  }
+}
