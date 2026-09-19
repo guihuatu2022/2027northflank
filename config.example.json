@@ -1,0 +1,107 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "socks-in",
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls", "quic"]
+      }
+    },
+    {
+      "tag": "http-in",
+      "listen": "127.0.0.1",
+      "port": 10809,
+      "protocol": "http"
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "YOUR-WORKER-DOMAIN.example.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "PASTE-YOUR-UUID-HERE",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "YOUR-WORKER-DOMAIN.example.com",
+          "allowInsecure": false,
+          "fingerprint": "chrome",
+          "alpn": ["h2", "http/1.1"]
+        },
+        "xhttpSettings": {
+          "path": "/PASTE-YOUR-RANDOM-PATH",
+          "host": "YOUR-WORKER-DOMAIN.example.com",
+          "mode": "packet-up",
+          "headers": {
+            "x-auth": "PASTE-YOUR-CLIENT-SECRET"
+          },
+          "scMaxEachPostBytes": "500000-1000000",
+          "scMinPostsIntervalMs": "20-50",
+          "xPaddingBytes": "100-1000",
+          "xmux": {
+            "maxConcurrency": 16,
+            "hKeepAlivePeriod": 40,
+            "hMaxRequestTimes": "600-900",
+            "hMaxReusableSecs": "1800-3000"
+          }
+        },
+        "sockopt": {
+          "tcpNoDelay": true,
+          "tcpKeepAliveIdle": 30,
+          "domainStrategy": "UseIPv4"
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "ip": [
+          "127.0.0.0/8",
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "::1/128",
+          "fc00::/7"
+        ]
+      }
+    ]
+  }
+}
