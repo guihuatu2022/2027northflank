@@ -9,13 +9,13 @@
       "listen_port": PORT_PLACEHOLDER,
       "users": [
         {
-          "uuid": "你的-UUID-请替换",
+          "uuid": "UUID_PLACEHOLDER",
           "flow": ""
         }
       ],
       "transport": {
         "type": "xhttp",
-        "path": "/xhttp-8f3b2a1c-9d4e-4f2a"
+        "path": "PATH_PLACEHOLDER"
       }
     }
   ],
